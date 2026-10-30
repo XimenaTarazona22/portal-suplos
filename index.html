@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Portal documental técnico-funcional de integraciones SUPLOS - CAI / PeopleSoft 9.1">
+  <title>Portal de Integraciones SUPLOS - CAI v1.8</title>
+  <link rel="icon" href="assets/davivienda-logo.png">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="locked">
+<div class="login-screen" id="loginScreen" hidden>
+  <div class="login-panel">
+    <img src="assets/davivienda-logo.png" alt="Davivienda">
+    <strong>Portal de Integraciones SUPLOS - CAI</strong>
+    <p>Documentación técnico-funcional de las 17 integraciones oficiales entre SUPLOS y CAI / PeopleSoft 9.1.</p>
+    <ul>
+      <li>Catálogo de integraciones, JSON fuente y mapeo conciliado.</li>
+      <li>Códigos transversales de respuesta y matriz de riesgos.</li>
+      <li>Seguimiento ponderado del avance del proyecto.</li>
+    </ul>
+    <span class="login-panel-foot">Versión 1.8 · Uso interno</span>
+  </div>
+  <div class="login-form-side">
+    <form class="login-card" id="loginForm" autocomplete="off">
+      <h1>Iniciar sesión</h1>
+      <p class="login-sub">Acceso restringido al equipo del proyecto.</p>
+      <label for="loginUser">Usuario</label>
+      <input id="loginUser" name="usuario" type="text" placeholder="nombre.usuario" autocomplete="username" spellcheck="false" required>
+      <label for="loginPass">Contraseña</label>
+      <div class="login-pass"><input id="loginPass" name="clave" type="password" placeholder="••••••••" autocomplete="current-password" required><button type="button" id="togglePass" aria-label="Mostrar contraseña">Mostrar</button></div>
+      <label class="login-check"><input id="loginRemember" type="checkbox"> Mantener la sesión en este equipo</label>
+      <div class="login-message" id="loginMessage" role="alert" hidden></div>
+      <button class="btn primary login-submit" id="loginSubmit" type="submit">Ingresar</button>
+      <p class="login-note">La sesión caduca a las 8 horas. Si olvidó su contraseña, solicítela al administrador del portal.</p>
+    </form>
+  </div>
+</div>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar" aria-label="Navegación principal">
+    <div class="brand">
+      <img src="assets/davivienda-logo.png" alt="Davivienda">
+      <div><strong>SUPLOS - CAI</strong><span>Portal de integraciones</span></div>
+    </div>
+    <label class="side-search"><span>Buscar</span><input id="globalSearch" type="search" placeholder="Integración, campo o tabla"></label>
+    <nav>
+      <div class="nav-group-label">Portal</div>
+      <button class="nav-link active" data-section="home"><span>⌂</span>Inicio</button>
+      <button class="nav-link" data-section="architecture"><span>▦</span>Arquitectura</button>
+      <button class="nav-link" data-section="integrations"><span>⇄</span>Integraciones</button>
+      <div class="nav-group-label">Gobierno</div>
+      <button class="nav-link" data-section="errors"><span>!</span>Códigos de respuesta</button>
+      <button class="nav-link" data-section="risks"><span>△</span>Riesgos</button>
+      <div class="nav-group-label">Gestión</div>
+      <button class="nav-link" data-section="management"><span>▥</span>Gestión del proyecto</button>
+      <button class="nav-link" data-section="sources"><span>▤</span>Fuentes</button>
+    </nav>
+    <div class="sidebar-foot"><strong>Versión 1.8</strong><span>Línea base actualizada</span><span>Branding ajustado sin afectar la estructura funcional</span></div>
+  </aside>
+  <div class="overlay" id="overlay"></div>
+  <main class="main">
+    <header class="topbar">
+      <button class="menu-button" id="menuButton" aria-label="Abrir menú">☰</button>
+      <div class="top-title"><strong>Portal de Integraciones SUPLOS - CAI</strong><span>PeopleSoft 9.1 / PeopleTools 8.55.14</span></div>
+      <span class="badge badge-confirmed">Versión 1.8</span>
+      <div class="session-chip" id="sessionChip" hidden>
+        <span class="session-avatar" id="sessionAvatar"></span>
+        <span class="session-id"><strong id="sessionName"></strong><span id="sessionRole"></span></span>
+        <button class="session-logout" id="logoutButton" type="button">Cerrar sesión</button>
+      </div>
+    </header>
+    <div class="content">
+      <section class="section active" id="section-home">
+        <div class="hero">
+          <div class="eyebrow">Banco Davivienda · Integraciones ERP</div>
+          <h1>Documentación técnico-funcional trazable, navegable y orientada a cada integración.</h1>
+          <p>La versión 1.8 conserva las 17 integraciones oficiales y actualiza el catálogo de códigos de respuesta, los ejemplos JSON y los mapeos con base en los archivos Excel vigentes.</p>
+          <div class="hero-actions"><button class="btn primary" data-go="integrations">Explorar integraciones</button><button class="btn secondary" data-go="architecture">Ver arquitectura</button></div>
+        </div>
+        <div class="metric-grid" id="homeMetrics"></div>
+        <div class="grid two">
+          <article class="card">
+            <h2>Línea base documental</h2>
+            <div class="callout info"><strong>Línea base oficial:</strong> el portal trabaja con 17 integraciones distribuidas en Radicación, Contratos, Pedidos, Recepciones y Proveedores.</div>
+            <div id="moduleBaseline"></div>
+          </article>
+          <article class="card">
+            <h2>Criterios de esta versión</h2>
+            <ul class="check-list"><li>La descripción funcional no se copia de filas inconsistentes.</li><li>Los flujos y secuencias se presentan por integración.</li><li>Request y response se toman de los ejemplos JSON fuente.</li><li>El mapeo se deduplica y se muestra únicamente contra los campos del JSON.</li><li>El envelope transversal permanece sin cambios.</li><li>Las propuestas se identifican explícitamente.</li></ul>
+            <div class="status-legend"><span class="badge badge-confirmed">Confirmado</span><span class="badge badge-proposed">Propuesta</span><span class="badge badge-validation">En validación</span><span class="badge badge-pending">Pendiente</span></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="section-architecture">
+        <div class="section-head"><div><h1>Arquitectura general</h1><p>Imágenes del documento de arquitectura y patrón transversal de integración.</p></div><span class="badge badge-confirmed">Fuente oficial del proyecto</span></div>
+        <div class="image-grid">
+          <article class="image-card"><div class="image-card-head"><div><h2>Arquitectura SUPLOS - APIGEE - CAI - PeopleSoft</h2><p>Página 15 del diseño de arquitectura.</p></div><button class="btn ghost zoom-image" data-image="assets/arquitectura-general.png" data-title="Arquitectura general">Ampliar</button></div><img src="assets/arquitectura-general.png" alt="Diagrama general de arquitectura"></article>
+          <article class="image-card"><div class="image-card-head"><div><h2>Secuencia E2E de referencia</h2><p>Página 18 del diseño de arquitectura.</p></div><button class="btn ghost zoom-image" data-image="assets/secuencia-e2e.png" data-title="Secuencia E2E">Ampliar</button></div><img src="assets/secuencia-e2e.png" alt="Diagrama de secuencia E2E"></article>
+        </div>
+        <div class="callout info"><strong>Prioridad documental:</strong> los ejemplos JSON definen la estructura y nombres de campos. El mapeo PeopleSoft se deduplica y se cruza contra esa estructura; los campos sin correspondencia quedan visibles como pendientes.</div>
+        <div class="grid two">
+          <article class="card"><h2>Envelope transversal - conservar</h2><div class="code-head"><span>Request común</span><button class="copy" data-copy="envelope">Copiar</button></div><pre id="envelope">{
+  "idTransaccion": "UUID",
+  "proceso": "CODIGO_INTEGRACION",
+  "datos": "contenido-cifrado"
+}</pre><p class="muted">Los códigos y descripciones del resultado se proponen dentro del contenido cifrado de <strong>datos</strong>, no como nuevos campos del envelope.</p></article>
+          <article class="card"><h2>Responsabilidad por capa</h2><div id="layerCards" class="layer-list"></div></article>
+        </div>
+      </section>
+
+      <section class="section" id="section-integrations">
+        <div class="catalog-view" id="catalogView">
+          <div class="section-head"><div><h1>Integraciones</h1><p>Flujo, reglas, secuencia, JSON, mapeo y acciones posteriores por cada integración oficial.</p></div><span class="badge badge-confirmed">17 integraciones oficiales</span></div>
+          <div class="toolbar"><input id="integrationSearch" type="search" placeholder="Buscar código, objetivo, campo o tabla"><select id="integrationStatus"><option value="all">Todos los estados</option><option value="En validación">En validación</option><option value="Pendiente de definición">Pendiente de definición</option><option value="Pendiente de mapeo">Pendiente de mapeo</option></select></div>
+          <div class="filter-pills" id="moduleFilters"></div>
+          <div class="integration-grid" id="integrationGrid"></div>
+          <div class="empty-state" id="integrationEmpty" hidden>No hay integraciones que coincidan con los filtros.</div>
+        </div>
+        <div class="detail-view" id="detailView" hidden>
+          <button class="back-button" id="backCatalog">← Volver al catálogo</button>
+          <div id="integrationDetail"></div>
+        </div>
+      </section>
+
+      <section class="section" id="section-errors">
+        <div class="section-head"><div><h1>Códigos transversales de respuesta</h1><p>Catálogo vigente que reemplaza completamente la versión anterior y diferencia respuestas HTTP, resultados funcionales y alertas operativas.</p></div><span class="badge badge-confirmed">Catálogo vigente</span></div>
+        <div class="callout info"><strong>Regla de canal:</strong> OAuth, rate limit y errores previos a CAI se devuelven por HTTP. Los resultados funcionales y errores posteriores al ingreso a CAI pueden viajar dentro del campo cifrado <strong>datos</strong>.</div>
+        <div class="toolbar"><input id="errorSearch" type="search" placeholder="Buscar código, categoría o descripción"><select id="errorCategory"><option value="all">Todas las categorías</option></select></div>
+        <div class="table-shell"><table class="data-table"><thead><tr><th>HTTP</th><th>Código</th><th>Categoría</th><th>Capa</th><th>Descripción</th><th>Canal</th><th>Reintento</th><th>Reproceso</th><th>Acción en SUPLOS</th></tr></thead><tbody id="errorTable"></tbody></table></div>
+      </section>
+
+      <section class="section" id="section-risks">
+        <div class="section-head"><div><h1>Riesgos</h1><p>Probabilidad, impacto, valoración, mitigación y posición en la matriz de calor.</p></div><span class="badge badge-confirmed">Fuente: Diseño de Arquitectura</span></div>
+        <div class="risk-layout"><article class="card heat-card"><h2>Matriz de calor 5 × 5</h2><p class="muted">Probabilidad horizontal e impacto vertical. Seleccione un riesgo para ver su detalle.</p><div id="riskHeatmap" class="heatmap"></div><div id="riskSelected" class="risk-selected"></div></article><article class="card"><h2>Escala</h2><div class="scale-list"><span><i class="scale low"></i>Bajo</span><span><i class="scale medium"></i>Medio</span><span><i class="scale high"></i>Alto</span></div><p class="muted">Valor inherente = Probabilidad × Impacto. La clasificación visual se usa para facilitar la lectura; la criticidad oficial se conserva en la tabla.</p></article></div>
+        <div class="table-shell"><table class="data-table"><thead><tr><th>ID</th><th>Dimensión</th><th>Riesgo</th><th>Prob.</th><th>Impacto</th><th>Valor</th><th>Criticidad</th><th>Estado</th><th>Plan de mitigación</th><th>Residual</th><th>Prioridad</th></tr></thead><tbody id="riskTable"></tbody></table></div>
+      </section>
+
+      <section class="section" id="section-management">
+        <div class="section-head"><div><h1>Gestión del proyecto</h1><p>Seguimiento ponderado basado en la matriz de avance adjunta. Los valores se guardan localmente en el navegador sobre la línea base oficial de 17 integraciones.</p></div><span class="badge badge-draft">Modelo operativo editable</span></div>
+        <div class="metric-grid" id="pmMetrics"></div>
+        <div class="grid two"><article class="card"><h2>Avance por módulo</h2><div id="moduleProgress"></div></article><article class="card"><h2>Uso</h2><ul class="check-list"><li>Edite únicamente el porcentaje de avance.</li><li>El aporte ponderado se recalcula automáticamente.</li><li>Los datos se conservan en este navegador mediante localStorage.</li><li>La línea base suma 100 % y contiene 17 integraciones.</li></ul><div class="button-row"><button class="btn secondary" id="resetProgress">Restablecer avances</button><button class="btn secondary" id="exportProgress">Exportar CSV</button></div></article></div>
+        <div class="table-shell"><table class="data-table pm-table"><thead><tr><th>Módulo</th><th>Integración</th><th>Peso</th><th>Avance editable</th><th>Aporte ponderado</th><th>Estado calculado</th></tr></thead><tbody id="projectTable"></tbody></table></div>
+        <div class="callout info"><strong>Criterio de ponderación:</strong> se conserva el peso por módulo de la matriz de avance y se redistribuye dentro de las 17 integraciones oficiales.</div>
+      </section>
+
+      <section class="section" id="section-sources">
+        <div class="section-head"><div><h1>Fuentes documentales</h1><p>Archivos utilizados para construir la versión 1.8.</p></div></div>
+        <div id="sourceLibrary"></div>
+        <article class="card"><h2>Gobierno de contenido</h2><p class="muted">El portal diferencia contenido confirmado, propuesta y pendiente. No almacena secretos de integración, tokens reales, llaves privadas ni payloads productivos. Las credenciales de ingreso al portal son de uso documental, están definidas en el propio archivo de acceso y no corresponden a usuarios de CAI, SUPLOS ni PeopleSoft. Las discrepancias de las fuentes se muestran como pendientes en lugar de corregirse silenciosamente.</p></article>
+      </section>
+    </div>
+  </main>
+</div>
+<dialog id="imageDialog" class="image-dialog"><div class="dialog-head"><strong id="dialogTitle"></strong><button id="closeDialog" aria-label="Cerrar">×</button></div><div class="dialog-body"><img id="dialogImage" alt="Imagen ampliada"></div></dialog>
+<script src="assets/data.js"></script>
+<script src="assets/equivalence-rules.js"></script>
+<script src="assets/field-matching.js"></script>
+<script src="assets/app.js"></script>
+<script src="assets/auth.js"></script>
+</body>
+</html>
